@@ -15,6 +15,32 @@ import Timer from './components/Timer'
 import ShoppingCart from './components/ShoppingCart'
 import Pagination from './components/Pagination'
 import MultiStepForm from './components/MultiStepForm'
+import ImageUpload from './components/ImageUpload'
+import PasswordStrength from './components/PasswordStrength'
+import TabsComponent from './components/TabsComponent'
+import Accordion from './components/Accordion'
+import ModalComponent from './components/ModalComponent'
+import ToastNotification from './components/ToastNotification'
+import RatingComponent from './components/RatingComponent'
+import ProgressBar from './components/ProgressBar'
+import InfiniteScroll from './components/InfiniteScroll'
+import DragAndDrop from './components/DragAndDrop'
+import TagInput from './components/TagInput'
+import SearchFilter from './components/SearchFilter'
+import AutoComplete from './components/AutoComplete'
+import DatePicker from './components/DatePicker'
+import WeatherCard from './components/WeatherCard'
+import MarkdownPreview from './components/MarkdownPreview'
+import KanbanBoard from './components/KanbanBoard'
+import ChatInterface from './components/ChatInterface'
+import ChartComponent from './components/ChartComponent'
+import NotificationCenter from './components/NotificationCenter'
+import FileUploader from './components/FileUploader'
+import QuizApp from './components/QuizApp'
+import TicTacToe from './components/TicTacToe'
+import SnakeGame from './components/SnakeGame'
+import AdvancedTodoList from './components/AdvancedTodoList'
+import Stepper from './components/Stepper'
 
 // 組件配置
 const components = [
@@ -32,17 +58,58 @@ const components = [
   { id: 'login', name: '模擬登入', icon: '🔐', component: LoginForm, category: 'api' },
   
   // 進階練習
-  { id: 'product', name: '產品過濾', icon: '�️', component: ProductFilter, category: 'advanced' },
+  { id: 'product', name: '產品過濾', icon: '🛍️', component: ProductFilter, category: 'advanced' },
   { id: 'cart', name: '購物車', icon: '🛒', component: ShoppingCart, category: 'advanced' },
   { id: 'timer', name: '倒數計時器', icon: '⏰', component: Timer, category: 'advanced' },
   { id: 'pagination', name: '分頁功能', icon: '📄', component: Pagination, category: 'advanced' },
   { id: 'multistep', name: '多步驟表單', icon: '📋', component: MultiStepForm, category: 'advanced' },
+  
+  // UI 組件
+  { id: 'tabs', name: 'Tab 切換', icon: '📑', component: TabsComponent, category: 'ui' },
+  { id: 'accordion', name: '手風琴', icon: '📋', component: Accordion, category: 'ui' },
+  { id: 'modal', name: 'Modal 彈窗', icon: '🪟', component: ModalComponent, category: 'ui' },
+  { id: 'toast', name: 'Toast 通知', icon: '🔔', component: ToastNotification, category: 'ui' },
+  { id: 'rating', name: '評分組件', icon: '⭐', component: RatingComponent, category: 'ui' },
+  { id: 'progress', name: '進度條', icon: '📊', component: ProgressBar, category: 'ui' },
+  
+  // 互動功能
+  { id: 'image-upload', name: '圖片上傳', icon: '📸', component: ImageUpload, category: 'interactive' },
+  { id: 'password', name: '密碼強度', icon: '🔒', component: PasswordStrength, category: 'interactive' },
+  { id: 'infinite-scroll', name: '無限滾動', icon: '♾️', component: InfiniteScroll, category: 'interactive' },
+  { id: 'drag-drop', name: '拖放排序', icon: '🎯', component: DragAndDrop, category: 'interactive' },
+  { id: 'tag-input', name: '標籤輸入', icon: '🏷️', component: TagInput, category: 'interactive' },
+  
+  // 實用工具
+  { id: 'search-filter', name: '搜尋過濾', icon: '🔍', component: SearchFilter, category: 'tools' },
+  { id: 'autocomplete', name: '自動完成', icon: '🔎', component: AutoComplete, category: 'tools' },
+  { id: 'datepicker', name: '日期選擇', icon: '📅', component: DatePicker, category: 'tools' },
+  { id: 'weather', name: '天氣卡片', icon: '🌤️', component: WeatherCard, category: 'tools' },
+  { id: 'markdown', name: 'Markdown', icon: '📝', component: MarkdownPreview, category: 'tools' },
+  { id: 'file-uploader', name: '檔案上傳', icon: '📤', component: FileUploader, category: 'tools' },
+  { id: 'stepper', name: '步驟器', icon: '📝', component: Stepper, category: 'tools' },
+  
+  // 數據管理
+  { id: 'kanban', name: '看板管理', icon: '📋', component: KanbanBoard, category: 'data' },
+  { id: 'advanced-todo', name: '進階待辦', icon: '✅', component: AdvancedTodoList, category: 'data' },
+  { id: 'chart', name: '數據圖表', icon: '📊', component: ChartComponent, category: 'data' },
+  { id: 'notifications', name: '通知中心', icon: '🔔', component: NotificationCenter, category: 'data' },
+  
+  // 遊戲娛樂
+  { id: 'chat', name: '聊天介面', icon: '💬', component: ChatInterface, category: 'game' },
+  { id: 'quiz', name: '測驗應用', icon: '❓', component: QuizApp, category: 'game' },
+  { id: 'tictactoe', name: '井字遊戲', icon: '⭕', component: TicTacToe, category: 'game' },
+  { id: 'snake', name: '貪吃蛇', icon: '🐍', component: SnakeGame, category: 'game' },
 ]
 
 const categories = [
   { id: 'basic', name: '📚 基礎練習', color: 'blue' },
   { id: 'api', name: '🌐 API 請求', color: 'purple' },
   { id: 'advanced', name: '💼 進階實戰', color: 'emerald' },
+  { id: 'ui', name: '🎨 UI 組件', color: 'pink' },
+  { id: 'interactive', name: '🎮 互動功能', color: 'orange' },
+  { id: 'tools', name: '🔧 實用工具', color: 'cyan' },
+  { id: 'data', name: '📊 數據管理', color: 'indigo' },
+  { id: 'game', name: '🎯 遊戲娛樂', color: 'rose' },
 ]
 
 export default function Home() {
