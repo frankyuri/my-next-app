@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, FormEvent, ChangeEvent } from 'react'
+import { useState, FormEvent, ChangeEvent, useEffect } from 'react'
 
 // 練習 5: 表單處理 - 學習受控組件
 interface FormData {
@@ -8,6 +8,12 @@ interface FormData {
   email: string
   age: string
   gender: string
+}
+
+interface FormErrors {
+  name?: string
+  email?: string
+  age?: string
 }
 
 export default function FormExample() {
@@ -18,22 +24,73 @@ export default function FormExample() {
     gender: 'male'
   })
   const [submitted, setSubmitted] = useState(false)
+  const [errors, setErrors] = useState<FormErrors>({})
+
+  const validateForm = (): boolean => {
+    const newErrors: FormErrors = {}
+    // 姓名驗證
+    if (!formData.name.trim()) {
+      newErrors.name = '姓名為必填項目'
+    } else if (formData.name.length < 2) {
+      newErrors.name = '姓名至少需要 2 個字'
+    }
+    // Email 驗證
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email 為必填項目'
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = 'Email 格式不正確'
+    }
+    // 年齡驗證
+    if (formData.age) {
+      const ageNum = parseInt(formData.age)
+      if (ageNum < 0 || ageNum > 150) {
+        newErrors.age = '年齡必須在 0-150 之間'
+      }
+    }
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target
+    let finalValue = value
+
+    // 年齡自動修正
+    if (name === 'age' && value) {
+      const numValue = parseInt(value)
+
+      finalValue = numValue.toString()
+      // 限制範圍在 0-150 之間
+      if (numValue < 0) finalValue = '0'
+      if (numValue > 150) finalValue = '150'
+    }
     setFormData(prev => ({
       ...prev,
-      [name]: value
+      [name]: finalValue
     }))
   }
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
-    setSubmitted(true)
+    if (validateForm()) {
+      setSubmitted(true)
+      console.log('表單提交成功:', formData)
+    }
   }
+
+  useEffect(() => {
+    if (Object.keys(errors).length > 0) {
+      const timer = setTimeout(() => {
+        setErrors({})
+      }, 3000) // 3秒後執行
+
+      return () => clearTimeout(timer) // 清理定時器
+    }
+  }, [errors]) // 當 errors 改變時觸發
 
   const reset = () => {
     setFormData({ name: '', email: '', age: '', gender: 'male' })
+    setErrors({})
     setSubmitted(false)
   }
 
@@ -41,29 +98,48 @@ export default function FormExample() {
     <div className="p-6 border-2 border-blue-500 rounded-lg m-4 bg-white dark:bg-zinc-900">
       <h2 className="text-2xl font-bold mb-4 text-gray-800 dark:text-white">表單練習</h2>
       {!submitted ? (
-        <form onSubmit={handleSubmit} className="max-w-md mx-auto space-y-4">
+        <form onSubmit={handleSubmit} noValidate className="max-w-md mx-auto space-y-4">
+          {/* 姓名欄位 */}
           <div>
-            <label className="block text-gray-700 dark:text-gray-300 mb-2">姓名:</label>
+            <label className="block text-gray-700 dark:text-gray-300 mb-2">
+              姓名: <span className="text-red-500">*</span>
+            </label>
             <input
               type="text"
               name="name"
               value={formData.name}
               onChange={handleChange}
-              required
-              className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-zinc-800 dark:border-zinc-700 dark:text-white"
+              className={`w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 dark:bg-zinc-800 dark:text-white ${errors.name
+                ? 'border-red-500 focus:ring-red-500'
+                : 'border-gray-300 focus:ring-blue-500 dark:border-zinc-700'
+                }`}
             />
+            {errors.name && (
+              <p className="mt-1 text-sm text-red-500">⚠️ {errors.name}</p>
+            )}
           </div>
+
+          {/* Email 欄位 */}
           <div>
-            <label className="block text-gray-700 dark:text-gray-300 mb-2">Email:</label>
+            <label className="block text-gray-700 dark:text-gray-300 mb-2">
+              Email: <span className="text-red-500">*</span>
+            </label>
             <input
               type="email"
               name="email"
               value={formData.email}
               onChange={handleChange}
-              required
-              className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-zinc-800 dark:border-zinc-700 dark:text-white"
+              className={`w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 dark:bg-zinc-800 dark:text-white ${errors.email
+                ? 'border-red-500 focus:ring-red-500'
+                : 'border-gray-300 focus:ring-blue-500 dark:border-zinc-700'
+                }`}
             />
+            {errors.email && (
+              <p className="mt-1 text-sm text-red-500">⚠️ {errors.email}</p>
+            )}
           </div>
+
+          {/* 年齡欄位 */}
           <div>
             <label className="block text-gray-700 dark:text-gray-300 mb-2">年齡:</label>
             <input
@@ -71,9 +147,17 @@ export default function FormExample() {
               name="age"
               value={formData.age}
               onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-zinc-800 dark:border-zinc-700 dark:text-white"
+              className={`w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 dark:bg-zinc-800 dark:text-white ${errors.age
+                ? 'border-red-500 focus:ring-red-500'
+                : 'border-gray-300 focus:ring-blue-500 dark:border-zinc-700'
+                }`}
             />
+            {errors.age && (
+              <p className="mt-1 text-sm text-red-500">⚠️ {errors.age}</p>
+            )}
           </div>
+
+          {/* 性別欄位 */}
           <div>
             <label className="block text-gray-700 dark:text-gray-300 mb-2">性別:</label>
             <select
@@ -87,6 +171,7 @@ export default function FormExample() {
               <option value="other">其他</option>
             </select>
           </div>
+
           <button
             type="submit"
             className="w-full px-6 py-3 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors font-semibold"
