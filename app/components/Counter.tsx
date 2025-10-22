@@ -8,6 +8,7 @@ export default function Counter() {
 
   const increment = () => setCount(count + 1)
   const decrement = () => setCount(count - 1)
+  const sign = () => setCount(-count)
   const reset = () => setCount(0)
 
   return (
@@ -17,23 +18,29 @@ export default function Counter() {
         當前數值: <strong className="text-blue-600 dark:text-blue-400 text-2xl">{count}</strong>
       </p>
       <div className="flex gap-3 flex-wrap">
-        <button 
+        <button
           onClick={increment}
           className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition-colors"
         >
           增加 +1
         </button>
-        <button 
+        <button
           onClick={decrement}
           className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-colors"
         >
           減少 -1
         </button>
-        <button 
+        <button
           onClick={reset}
           className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors"
         >
           重置
+        </button>
+        <button
+          onClick={sign}
+          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+        >
+          取反
         </button>
       </div>
     </div>

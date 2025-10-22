@@ -32,9 +32,8 @@ export default function ColorPicker() {
             key={color.value}
             onClick={() => setSelectedColor(color.value)}
             style={{ backgroundColor: color.value }}
-            className={`w-12 h-12 rounded-full transition-transform hover:scale-110 ${
-              selectedColor === color.value ? 'ring-4 ring-black dark:ring-white' : 'ring-2 ring-gray-300'
-            }`}
+            className={`w-12 h-12 rounded-full transition-transform hover:scale-110 ${selectedColor === color.value ? 'ring-4 ring-black dark:ring-white' : 'ring-2 ring-gray-300'
+              }`}
             title={color.name}
           />
         ))}
