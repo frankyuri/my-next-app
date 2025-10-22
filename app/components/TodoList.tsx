@@ -42,7 +42,7 @@ export default function TodoList() {
           placeholder="輸入新任務..."
           className="flex-1 px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-zinc-800 dark:border-zinc-700 dark:text-white"
         />
-        <button 
+        <button
           onClick={addTodo}
           className="px-6 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
         >

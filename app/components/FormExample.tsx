@@ -87,7 +87,7 @@ export default function FormExample() {
               <option value="other">其他</option>
             </select>
           </div>
-          <button 
+          <button
             type="submit"
             className="w-full px-6 py-3 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors font-semibold"
           >
@@ -103,7 +103,7 @@ export default function FormExample() {
             <p><strong>年齡:</strong> {formData.age || '未提供'}</p>
             <p><strong>性別:</strong> {formData.gender === 'male' ? '男性' : formData.gender === 'female' ? '女性' : '其他'}</p>
           </div>
-          <button 
+          <button
             onClick={reset}
             className="mt-4 w-full px-6 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors"
           >
