@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { Card, PageTitle, Button, Input, StatCard, EmptyState, LearningPoints, Badge } from './shared/UIComponents'
 
 interface Expense {
   id: number
@@ -67,32 +68,26 @@ export default function ExpenseTracker() {
       <div className="grid lg:grid-cols-3 gap-6">
         {/* 左側：輸入表單 */}
         <div className="lg:col-span-1">
-          <div className="bg-white dark:bg-zinc-800 rounded-lg shadow-lg p-6 sticky top-6">
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
-              💰 記帳本
-            </h2>
+          <Card className="sticky top-6">
+            <PageTitle icon="💰">記帳本</PageTitle>
 
             {/* 總金額 */}
-            <div className="mb-6 p-4 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg text-white">
-              <p className="text-sm opacity-90 mb-1">總支出</p>
-              <p className="text-3xl font-bold">${totalAmount.toLocaleString()}</p>
+            <div className="mb-6">
+              <StatCard label="總支出" value={`$${totalAmount.toLocaleString()}`} color="purple" />
             </div>
 
             {/* 表單 */}
             <div className="space-y-4 mb-6">
-              <input
-                type="text"
+              <Input
                 value={description}
-                onChange={(e) => setDescription(e.target.value)}
+                onChange={setDescription}
                 placeholder="支出描述..."
-                className="w-full px-4 py-3 border border-gray-300 dark:border-zinc-600 rounded-lg dark:bg-zinc-700 dark:text-white"
               />
-              <input
+              <Input
                 type="number"
                 value={amount}
-                onChange={(e) => setAmount(e.target.value)}
+                onChange={setAmount}
                 placeholder="金額"
-                className="w-full px-4 py-3 border border-gray-300 dark:border-zinc-600 rounded-lg dark:bg-zinc-700 dark:text-white"
               />
               <select
                 value={category}
@@ -103,12 +98,9 @@ export default function ExpenseTracker() {
                   <option key={cat} value={cat}>{getCategoryIcon(cat)} {cat}</option>
                 ))}
               </select>
-              <button
-                onClick={addExpense}
-                className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
-              >
+              <Button onClick={addExpense} fullWidth size="lg">
                 新增支出
-              </button>
+              </Button>
             </div>
 
             {/* 分類統計 */}
@@ -127,49 +119,40 @@ export default function ExpenseTracker() {
                 ))}
               </div>
             </div>
-          </div>
+          </Card>
         </div>
 
         {/* 右側：支出列表 */}
         <div className="lg:col-span-2">
-          <div className="bg-white dark:bg-zinc-800 rounded-lg shadow-lg p-6">
+          <Card>
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-xl font-bold text-gray-900 dark:text-white">
                 支出記錄
               </h3>
               <div className="flex gap-2">
-                <button
+                <Button
                   onClick={() => setFilter('all')}
-                  className={`px-3 py-1 text-sm rounded-lg transition-colors ${
-                    filter === 'all'
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-gray-100 dark:bg-zinc-700 text-gray-700 dark:text-gray-300'
-                  }`}
+                  variant={filter === 'all' ? 'primary' : 'secondary'}
+                  size="sm"
                 >
                   全部
-                </button>
+                </Button>
                 {categories.map(cat => (
-                  <button
+                  <Button
                     key={cat}
                     onClick={() => setFilter(cat)}
-                    className={`px-3 py-1 text-sm rounded-lg transition-colors ${
-                      filter === cat
-                        ? 'bg-blue-600 text-white'
-                        : 'bg-gray-100 dark:bg-zinc-700 text-gray-700 dark:text-gray-300'
-                    }`}
+                    variant={filter === cat ? 'primary' : 'secondary'}
+                    size="sm"
                   >
                     {getCategoryIcon(cat)}
-                  </button>
+                  </Button>
                 ))}
               </div>
             </div>
 
             <div className="space-y-3">
               {filteredExpenses.length === 0 ? (
-                <div className="text-center py-12 text-gray-500 dark:text-gray-400">
-                  <div className="text-6xl mb-4">📝</div>
-                  <p>還沒有支出記錄</p>
-                </div>
+                <EmptyState icon="📝" message="還沒有支出記錄" />
               ) : (
                 filteredExpenses.map(expense => (
                   <div
@@ -182,9 +165,10 @@ export default function ExpenseTracker() {
                         <p className="font-medium text-gray-900 dark:text-white">
                           {expense.description}
                         </p>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
-                          {expense.category} • {expense.date}
-                        </p>
+                        <div className="flex gap-2 mt-1">
+                          <Badge color="blue">{expense.category}</Badge>
+                          <Badge color="gray">{expense.date}</Badge>
+                        </div>
                       </div>
                     </div>
                     <div className="flex items-center gap-4">
@@ -202,21 +186,19 @@ export default function ExpenseTracker() {
                 ))
               )}
             </div>
-          </div>
+          </Card>
         </div>
       </div>
 
-      {/* 學習要點 */}
-      <div className="mt-6 bg-blue-50 dark:bg-blue-900/20 rounded-lg p-6">
-        <h3 className="font-semibold text-blue-900 dark:text-blue-300 mb-3">💡 學習要點</h3>
-        <ul className="space-y-2 text-sm text-blue-800 dark:text-blue-200">
-          <li>• <strong>reduce 方法</strong>：計算總金額和分類統計</li>
-          <li>• <strong>雙欄佈局</strong>：左側表單，右側列表</li>
-          <li>• <strong>分類過濾</strong>：按類別篩選支出</li>
-          <li>• <strong>數字格式化</strong>：toLocaleString 千分位顯示</li>
-          <li>• <strong>sticky 定位</strong>：表單固定在視窗中</li>
-        </ul>
-      </div>
+      <LearningPoints
+        points={[
+          '• <strong>reduce 方法</strong>：計算總金額和分類統計',
+          '• <strong>雙欄佈局</strong>：左側表單，右側列表',
+          '• <strong>分類過濾</strong>：按類別篩選支出',
+          '• <strong>數字格式化</strong>：toLocaleString 千分位顯示',
+          '• <strong>sticky 定位</strong>：表單固定在視窗中',
+        ]}
+      />
     </div>
   )
 }
