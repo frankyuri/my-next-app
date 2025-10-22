@@ -41,6 +41,16 @@ import TicTacToe from './components/TicTacToe'
 import SnakeGame from './components/SnakeGame'
 import AdvancedTodoList from './components/AdvancedTodoList'
 import Stepper from './components/Stepper'
+import ExpenseTracker from './components/ExpenseTracker'
+import Flashcards from './components/Flashcards'
+import MemoryGame from './components/MemoryGame'
+import PomodoroTimer from './components/PomodoroTimer'
+import HabitTracker from './components/HabitTracker'
+import StickyNotes from './components/StickyNotes'
+import Calculator from './components/Calculator'
+import TaskManager from './components/TaskManager'
+import RecipeFinder from './components/RecipeFinder'
+import ContactBook from './components/ContactBook'
 
 // 組件配置
 const components = [
@@ -99,6 +109,18 @@ const components = [
   { id: 'quiz', name: '測驗應用', icon: '❓', component: QuizApp, category: 'game' },
   { id: 'tictactoe', name: '井字遊戲', icon: '⭕', component: TicTacToe, category: 'game' },
   { id: 'snake', name: '貪吃蛇', icon: '🐍', component: SnakeGame, category: 'game' },
+  
+  // 生產力工具
+  { id: 'expense-tracker', name: '記帳本', icon: '💰', component: ExpenseTracker, category: 'productivity' },
+  { id: 'flashcards', name: '學習卡片', icon: '🃏', component: Flashcards, category: 'productivity' },
+  { id: 'memory-game', name: '記憶遊戲', icon: '🧠', component: MemoryGame, category: 'productivity' },
+  { id: 'pomodoro', name: '番茄鐘', icon: '🍅', component: PomodoroTimer, category: 'productivity' },
+  { id: 'habit-tracker', name: '習慣追蹤', icon: '📈', component: HabitTracker, category: 'productivity' },
+  { id: 'sticky-notes', name: '便利貼', icon: '📌', component: StickyNotes, category: 'productivity' },
+  { id: 'calculator', name: '計算機', icon: '🔢', component: Calculator, category: 'productivity' },
+  { id: 'task-manager', name: '任務管理', icon: '📋', component: TaskManager, category: 'productivity' },
+  { id: 'recipe-finder', name: '食譜搜尋', icon: '🍳', component: RecipeFinder, category: 'productivity' },
+  { id: 'contact-book', name: '聯絡人清單', icon: '📱', component: ContactBook, category: 'productivity' },
 ]
 
 const categories = [
@@ -110,6 +132,7 @@ const categories = [
   { id: 'tools', name: '🔧 實用工具', color: 'cyan' },
   { id: 'data', name: '📊 數據管理', color: 'indigo' },
   { id: 'game', name: '🎯 遊戲娛樂', color: 'rose' },
+  { id: 'productivity', name: '🎓 生產力工具', color: 'green' },
 ]
 
 export default function Home() {
