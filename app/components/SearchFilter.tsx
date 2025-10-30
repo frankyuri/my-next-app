@@ -12,7 +12,7 @@ interface Item {
 export default function SearchFilter() {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('all')
-  
+
   const items: Item[] = [
     { id: 1, name: 'iPhone 15 Pro', category: '手機', tags: ['蘋果', '5G', '高端'] },
     { id: 2, name: 'MacBook Air', category: '筆電', tags: ['蘋果', 'M2', '輕薄'] },
@@ -30,7 +30,7 @@ export default function SearchFilter() {
   const filteredItems = useMemo(() => {
     return items.filter(item => {
       const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          item.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()))
+        item.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()))
       const matchesCategory = selectedCategory === 'all' || item.category === selectedCategory
       return matchesSearch && matchesCategory
     })
@@ -60,11 +60,10 @@ export default function SearchFilter() {
             <button
               key={category}
               onClick={() => setSelectedCategory(category)}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                selectedCategory === category
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-gray-100 dark:bg-zinc-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-zinc-600'
-              }`}
+              className={`px-4 py-2 rounded-lg font-medium transition-colors ${selectedCategory === category
+                ? 'bg-blue-600 text-white'
+                : 'bg-gray-100 dark:bg-zinc-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-zinc-600'
+                }`}
             >
               {category === 'all' ? '全部' : category}
             </button>
